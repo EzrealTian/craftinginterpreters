@@ -68,7 +68,12 @@ clox:
 
 # Compile the C interpreter as ANSI standard C++.
 cpplox:
-	@ $(MAKE) -f util/c.make NAME=cpplox MODE=debug CPP=true SOURCE_DIR=c
+	@ $(MAKE) -f util/cpp.make NAME=cpplox MODE=release CPP=true SOURCE_DIR=cpp
+	@ cp build/cpplox cpplox
+
+cleancpp:
+	@ rm -rf $(BUILD_DIR)/release/cpplox
+	@ rm -rf cpplox
 
 # Compile and run the AST generator.
 generate_ast:

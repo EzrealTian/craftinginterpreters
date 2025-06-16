@@ -3,9 +3,12 @@
 /build/
 /gen/
 clox
+cpplox
 *.class
+pubspec.lock
 exercises/chapter01_introduction/3/linked_list
 .idea/
+.vscode/
 
 # I keep a scratch file at the top level to try stuff out.
 temp.lox
