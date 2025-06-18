@@ -3,6 +3,7 @@
 #include "lox.h"
 #include <string>
 #include <iostream>
+#include <vector>
 
 namespace Lox {
 
@@ -64,6 +65,8 @@ void Scanner::scanToken() {
     case '/':
       if (match('/')) {
         while (peek() != '\n' && !isAtEnd()) advance();
+      } else if (match('*')) {
+        blockComment();
       } else {
         addToken(TokenType::SLASH);
       }
@@ -171,6 +174,25 @@ void Scanner::identifier() {
     }
   }
   addToken(TokenType::IDENTIFIER, text);
+}
+
+void Scanner::blockComment() {
+  advance();
+  int count = 1;
+  while (count > 0 && !isAtEnd()) {
+    if (peek() == '*' && peekNext() == '/') {
+      advance();
+      --count;
+    } else if (peek() == '/' && peekNext() == '*') {
+      advance();
+      ++count;
+    }
+    advance();
+  }
+  if (count > 0) {
+    Lox::error(line_, "Unterminated block comment.");
+    return;
+  }
 }
 
 }  // namespace Lox

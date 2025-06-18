@@ -13,16 +13,19 @@ class Scanner {
   std::vector<Token> scanTokens();
 
  private:
+  // whether or not at the end of file
   bool isAtEnd() const;
 
   void scanToken();
 
+  // get current character and move forward
   char advance();
 
   void addToken(TokenType type);
 
   void addToken(TokenType type, std::any literal);
 
+  // check next character, if match then move forward
   bool match(char expected);
 
   bool isDigit(char ch) const;
@@ -31,8 +34,10 @@ class Scanner {
 
   bool isAlphaNum(char ch) const;
 
+  // get current character
   char peek() const;
 
+  // get next character
   char peekNext() const;
 
   void string();
@@ -40,6 +45,8 @@ class Scanner {
   void number();
 
   void identifier();
+
+  void blockComment();
 
  private:
   std::string source_;
