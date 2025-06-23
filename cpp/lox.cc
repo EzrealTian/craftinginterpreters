@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-namespace Lox {
+namespace lox {
 bool Lox::has_error_ = false;
 
 void Lox::runFile(std::string path) {
@@ -31,10 +31,10 @@ void Lox::runPrompt() {
   }
 }
 
-void Lox::run(std::string source) { 
+void Lox::run(std::string source) {
   Scanner scanner(source);
   std::vector<Token> tokens = scanner.scanTokens();
-  
+
   for (auto token : tokens) {
     std::cout << token.to_string() << std::endl;
   }
@@ -47,4 +47,4 @@ void Lox::report(int line, std::string where, std::string msg) {
             << std::endl;
   has_error_ = true;
 }
-}  // namespace Lox
+}  // namespace lox

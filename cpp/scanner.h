@@ -5,17 +5,19 @@
 #include "util.h"
 #include "token.h"
 
-namespace Lox {
+namespace lox {
 class Scanner {
  public:
   Scanner(std::string source) : source_(source) {}
 
+  // scan to the end of input to get a list of Token
   std::vector<Token> scanTokens();
 
  private:
   // whether or not at the end of file
   bool isAtEnd() const;
 
+  // scan single token
   void scanToken();
 
   // get current character and move forward
@@ -23,9 +25,9 @@ class Scanner {
 
   void addToken(TokenType type);
 
-  void addToken(TokenType type, std::any literal);
+  void addToken(TokenType type, Value literal);
 
-  // check next character, if match then move forward
+  // check current character, if match then move forward
   bool match(char expected);
 
   bool isDigit(char ch) const;
@@ -56,6 +58,6 @@ class Scanner {
   int current_ = 0;
   int line_ = 1;
 };
-}  // namespace Lox
+}  // namespace lox
 
 #endif  // LOX_SCANNER_H_

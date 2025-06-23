@@ -3,7 +3,7 @@
 
 #include <string>
 
-namespace Lox {
+namespace lox {
 class Lox {
  public:
   Lox() = default;
@@ -27,6 +27,6 @@ class Lox {
  private:
   static bool has_error_;
 };
-}  // namespace Lox
+}  // namespace lox
 
 #endif  // LOX_LOX_H_

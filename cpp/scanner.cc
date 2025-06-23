@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-namespace Lox {
+namespace lox {
 
 std::vector<Token> Scanner::scanTokens() {
   while (!isAtEnd()) {
@@ -117,7 +117,7 @@ char Scanner::peekNext() const {
 
 void Scanner::addToken(TokenType type) { addToken(type, nullptr); }
 
-void Scanner::addToken(TokenType type, std::any literal) {
+void Scanner::addToken(TokenType type, Value literal) {
   std::string text = source_.substr(start_, current_ - start_);
   tokens_.emplace_back(type, text, literal, line_);
 }
@@ -125,12 +125,10 @@ void Scanner::addToken(TokenType type, std::any literal) {
 bool Scanner::isDigit(char ch) const { return ch >= '0' && ch <= '9'; }
 
 bool Scanner::isAlpha(char ch) const {
-  return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch =='_';
+  return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '_';
 }
 
-bool Scanner::isAlphaNum(char ch) const {
-  return isAlpha(ch) || isDigit(ch);
-}
+bool Scanner::isAlphaNum(char ch) const { return isAlpha(ch) || isDigit(ch); }
 
 void Scanner::string() {
   while (peek() != '"' && !isAtEnd()) {
@@ -167,7 +165,8 @@ void Scanner::identifier() {
   while (isAlphaNum(peek())) advance();
 
   std::string text = source_.substr(start_, current_ - start_);
-  for (int i = 0; i < sizeof(kKeywords) / sizeof(std::pair<std::string, TokenType>); i++) {
+  for (int i = 0;
+       i < sizeof(kKeywords) / sizeof(std::pair<std::string, TokenType>); i++) {
     if (text == kKeywords[i].first) {
       addToken(kKeywords[i].second);
       return;
@@ -195,4 +194,4 @@ void Scanner::blockComment() {
   }
 }
 
-}  // namespace Lox
+}  // namespace lox

@@ -3,8 +3,11 @@
 
 #include <unordered_map>
 #include <string>
+#include <variant>
 
-namespace Lox {
+namespace lox {
+using Value = std::variant<std::string, double, std::nullptr_t>;
+
 enum class TokenType {
   // single character tokens
   LEFT_PAREN,
@@ -103,24 +106,15 @@ inline std::string tokenTypeToString(TokenType type) {
 }
 
 const std::pair<std::string, TokenType> kKeywords[] = {
-  {"and", TokenType::AND},
-  {"class", TokenType::CLASS},
-  {"else", TokenType::ELSE},
-  {"false", TokenType::FALSE},
-  {"for", TokenType::FOR},
-  {"fun", TokenType::FUN},
-  {"if", TokenType::IF},
-  {"nil", TokenType::NIL},
-  {"or", TokenType::OR},
-  {"print", TokenType::PRINT},
-  {"return", TokenType::RETURN},
-  {"super", TokenType::SUPER},
-  {"this", TokenType::THIS},
-  {"true", TokenType::TRUE},
-  {"var", TokenType::VAR},
-  {"while", TokenType::WHILE},
+    {"and", TokenType::AND},       {"class", TokenType::CLASS},
+    {"else", TokenType::ELSE},     {"false", TokenType::FALSE},
+    {"for", TokenType::FOR},       {"fun", TokenType::FUN},
+    {"if", TokenType::IF},         {"nil", TokenType::NIL},
+    {"or", TokenType::OR},         {"print", TokenType::PRINT},
+    {"return", TokenType::RETURN}, {"super", TokenType::SUPER},
+    {"this", TokenType::THIS},     {"true", TokenType::TRUE},
+    {"var", TokenType::VAR},       {"while", TokenType::WHILE},
 };
-}  // namespace Lox
+}  // namespace lox
 
-
-#endif // LOX_UTIL_H_
+#endif  // LOX_UTIL_H_
