@@ -11,6 +11,7 @@ namespace lox {
 class Expr {
  public:
   virtual std::string exprToString() const = 0;
+  virtual std::string convertToRPN() const = 0;
   virtual ~Expr() = default;
 
  protected:
@@ -25,6 +26,7 @@ class Binary : public Expr {
       : left_(left), op_(op), right_(right) {}
 
   std::string exprToString() const override;
+  std::string convertToRPN() const override;
 
  private:
   std::shared_ptr<Expr> left_;
@@ -37,6 +39,7 @@ class Grouping : public Expr {
   Grouping(std::shared_ptr<Expr> expression) : expression_(expression) {}
 
   std::string exprToString() const override;
+  std::string convertToRPN() const override;
 
  private:
   std::shared_ptr<Expr> expression_;
@@ -49,6 +52,7 @@ class Literal : public Expr {
   explicit Literal(double value) : value_(value) {}
 
   std::string exprToString() const override;
+  std::string convertToRPN() const override;
 
  private:
   Value value_;
@@ -59,6 +63,7 @@ class Unary : public Expr {
   Unary(Token op, std::shared_ptr<Expr> right) : op_(op), right_(right) {}
 
   std::string exprToString() const override;
+  std::string convertToRPN() const override;
 
  private:
   Token op_;

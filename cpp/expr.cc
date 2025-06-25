@@ -21,8 +21,16 @@ std::string Binary::exprToString() const {
   return parenthesize(op_.getLexeme(), {left_, right_});
 }
 
+std::string Binary::convertToRPN() const {
+  return left_->convertToRPN() + " " + right_->convertToRPN() + " " + op_.getLexeme();
+}
+
 std::string Grouping::exprToString() const {
   return parenthesize("group", {expression_});
+}
+
+std::string Grouping::convertToRPN() const {
+  return expression_->convertToRPN();
 }
 
 std::string Literal::exprToString() const {
@@ -40,8 +48,16 @@ std::string Literal::exprToString() const {
   }
 }
 
+std::string Literal::convertToRPN() const {
+  return this->exprToString();
+}
+
 std::string Unary::exprToString() const {
   return parenthesize(op_.getLexeme(), {right_});
+}
+
+std::string Unary::convertToRPN() const {
+  return right_->convertToRPN() + " " + op_.getLexeme();
 }
 
 }  // namespace lox
