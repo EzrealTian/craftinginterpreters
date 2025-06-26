@@ -43,6 +43,8 @@ std::string Literal::exprToString() const {
         str.pop_back();
     }
     return str;
+  } else if (auto d = std::get_if<bool>(&value_)) {
+    return d ? "true" : "false";
   } else {
     return "nil";
   }

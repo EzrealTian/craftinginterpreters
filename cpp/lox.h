@@ -2,6 +2,7 @@
 #define LOX_LOX_H_
 
 #include <string>
+#include "token.h"
 
 namespace lox {
 class Lox {
@@ -16,6 +17,7 @@ class Lox {
 
   // report the compile error, include the reason and the location line
   static void error(int line, std::string msg);
+  static void error(Token token, std::string msg);
 
  private:
   // report message to the console

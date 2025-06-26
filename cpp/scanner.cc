@@ -60,7 +60,7 @@ void Scanner::scanToken() {
       addToken(match('=') ? TokenType::LESS_EQUAL : TokenType::LESS);
       break;
     case '>':
-      addToken(match('=') ? TokenType::GREATER_QUAL : TokenType::GREATER);
+      addToken(match('=') ? TokenType::GREATER_EQUAL : TokenType::GREATER);
       break;
     case '/':
       if (match('/')) {

@@ -1,5 +1,8 @@
 #include "lox.h"
 #include "scanner.h"
+#include "parser.h"
+#include "expr.h"
+#include "ast_printer.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -35,12 +38,28 @@ void Lox::run(std::string source) {
   Scanner scanner(source);
   std::vector<Token> tokens = scanner.scanTokens();
 
+  Parser parser(tokens);
+  std::shared_ptr<Expr> expr = parser.parse();
+
+  if (has_error_)
+    return;
+  
+  std::cout << expr->exprToString() << std::endl;
+
   for (auto token : tokens) {
     std::cout << token.to_string() << std::endl;
   }
 }
 
 void Lox::error(int line, std::string msg) { report(line, "", msg); }
+
+void Lox::error(Token token, std::string msg) {
+  if (token.getType() == TokenType::EEOF) {
+    report(token.getLine(), " at end", msg);
+  } else {
+    report(token.getLine(), " at '" + token.getLexeme() + "'", msg);
+  }
+}
 
 void Lox::report(int line, std::string where, std::string msg) {
   std::cerr << "[line " << line << "] Error" << where << ": " << msg

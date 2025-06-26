@@ -6,7 +6,7 @@
 #include <variant>
 
 namespace lox {
-using Value = std::variant<std::string, double, std::nullptr_t>;
+using Value = std::variant<std::string, double, std::nullptr_t, bool>;
 
 enum class TokenType {
   // single character tokens
@@ -28,7 +28,7 @@ enum class TokenType {
   EQUAL,
   EQUAL_EQUAL,
   GREATER,
-  GREATER_QUAL,
+  GREATER_EQUAL,
   LESS,
   LESS_EQUAL,
 
@@ -58,7 +58,7 @@ enum class TokenType {
   EEOF
 };
 
-const std::unordered_map<TokenType, std::string> TokenTypeToString = {
+static const std::unordered_map<TokenType, std::string> TokenTypeToString = {
     {TokenType::LEFT_PAREN, "LEFT_PAREN"},
     {TokenType::RIGHT_PAREN, "RIGHT_PAREN"},
     {TokenType::LEFT_BRACE, "LEFT_BRACE"},
@@ -75,7 +75,7 @@ const std::unordered_map<TokenType, std::string> TokenTypeToString = {
     {TokenType::EQUAL, "EQUAL"},
     {TokenType::EQUAL_EQUAL, "EQUAL_EQUAL"},
     {TokenType::GREATER, "GREATER"},
-    {TokenType::GREATER_QUAL, "GREATER_QUAL"},
+    {TokenType::GREATER_EQUAL, "GREATER_EQUAL"},
     {TokenType::LESS, "LESS"},
     {TokenType::LESS_EQUAL, "LESS_EQUAL"},
     {TokenType::IDENTIFIER, "IDENTIFIER"},
@@ -105,7 +105,7 @@ inline std::string tokenTypeToString(TokenType type) {
   return it != TokenTypeToString.end() ? it->second : "UNKNOWN";
 }
 
-const std::pair<std::string, TokenType> kKeywords[] = {
+static const std::pair<std::string, TokenType> kKeywords[] = {
     {"and", TokenType::AND},       {"class", TokenType::CLASS},
     {"else", TokenType::ELSE},     {"false", TokenType::FALSE},
     {"for", TokenType::FOR},       {"fun", TokenType::FUN},

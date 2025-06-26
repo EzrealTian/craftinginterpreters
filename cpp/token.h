@@ -16,6 +16,10 @@ class Token {
 
   Value getLiteral() const { return literal_; }
 
+  TokenType getType() const { return type_; }
+
+  int getLine() const { return line_; }
+
  private:
   std::string literalToString() const;
 
